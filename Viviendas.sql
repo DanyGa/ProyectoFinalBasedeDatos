@@ -198,19 +198,20 @@ INSERT INTO Municipio (nombre, numero, idUsuarioCrea, fechaCrea)
            ('Torreon', '035', 1, GETDATE())
 GO
 
-INSERT INTO Persona (apellidoPaterno, apellidoMaterno, nombre, curp, edad, telefono, idMunicipio, idVivienda, idUsuarioCrea, fechaCrea)
-    VALUES ('Castillo',' Boone', ' Maria', ' CABM123456ABCDEFG', 20, '8661206835', 1, 2, 1, GETDATE()),
-           ('Escobedo',' Martinez', ' Veronica', ' ESMV123456ABCDEFG', 21, '8667896532', 3, 4, 1, GETDATE()),
-           ('Cortez',' Hernandez', ' Jared', ' COHJ123456ABCDEFG', 25, '8661234578', 5, 5, 1, GETDATE()),
-           ('Lugo',' Aguayo', ' Lucia', ' LUAL123456ABCDEFG', 19, '8663572468', 4, 1, 1, GETDATE()),
-           ('Sanchez',' Cardenas', ' Carmen', ' SACC123456ABCDEFG', 30, '8664716952', 2, 3, 1, GETDATE())
-GO
 INSERT INTO Vivienda (codigoPostal, calle, numero, colonia, idMunicipio, idUsuarioCrea, fechaCrea)
     VALUES ('15432',' Calle2',' 1042',' Col1', 2, 1, GETDATE()),
            ('25770',' Calle1',' 2568',' Col2', 1, 1, GETDATE()),
            ('19263',' Calle1',' 1631',' Col3', 4, 1, GETDATE()),
            ('36985',' Calle1',' 7895',' Col4', 3, 1, GETDATE()),
            ('57620',' Calle1',' 2056',' Col5', 5, 1, GETDATE())
+GO
+
+INSERT INTO Persona (apellidoPaterno, apellidoMaterno, nombre, curp, edad, telefono, idMunicipio, idVivienda, idUsuarioCrea, fechaCrea)
+    VALUES ('Castillo',' Boone', ' Maria', ' CABM123456ABCDEFG', 20, '8661206835', 1, 2, 1, GETDATE()),
+           ('Escobedo',' Martinez', ' Veronica', ' ESMV123456ABCDEFG', 21, '8667896532', 3, 4, 1, GETDATE()),
+           ('Cortez',' Hernandez', ' Jared', ' COHJ123456ABCDEFG', 25, '8661234578', 5, 5, 1, GETDATE()),
+           ('Lugo',' Aguayo', ' Lucia', ' LUAL123456ABCDEFG', 19, '8663572468', 4, 1, 1, GETDATE()),
+           ('Sanchez',' Cardenas', ' Carmen', ' SACC123456ABCDEFG', 30, '8664716952', 2, 3, 1, GETDATE())
 GO
 
 INSERT INTO ViviendaPersona (idVivienda, idPersona, idUsuarioCrea, fechaCrea)
@@ -247,9 +248,9 @@ FROM Vivienda v INNER JOIN Municipio m ON v.idMunicipio = m.idMunicipio WHERE
 m.idMunicipio = 1 GROUP BY v.idMunicipio
 GO
 
-CREATE VIEW PersonaInformacionCompleta AS SELECT p.nombre, p.apellidoPaterno, p.apellidoMaterno, v.codigoPostal, v.calle, v.numero, v.colonia, m.nombre
+CREATE VIEW PersonaInformacionCompleta AS SELECT p.apellidoPaterno, p.apellidoMaterno, v.codigoPostal, v.calle, v.numero, v.colonia, m.nombre
 FROM Persona p INNER JOIN  Vivienda v ON p.idVivienda = v.idVivienda INNER JOIN Municipio m ON v.idMunicipio = m.idMunicipio
-WHERE p.idPersona = 1 GROUP BY p.nombre, p.apellidoPaterno, p.apellidoMaterno, v.codigoPostal, v.calle, v.numero, v.colonia, m.nombre
+WHERE p.idPersona = 1 GROUP BY  p.apellidoPaterno, p.apellidoMaterno, v.codigoPostal, v.calle, v.numero, v.colonia, m.nombre
 GO
 
 CREATE VIEW ViviendaMunicipio AS SELECT v.idVivienda, v.codigoPostal, v.calle, v.numero, v.colonia, m.idMunicipio, m.nombre
